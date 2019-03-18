@@ -6,3 +6,6 @@ Refactor this to what you consider to be production ready code.
 
 ## Getting started
 Simply fork this repository and commit and push your changes to yor fork.
+
+## Usage 
+run `public/index.php` file.

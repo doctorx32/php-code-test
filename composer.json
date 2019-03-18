@@ -8,7 +8,9 @@
         "ext-xml": "*",
         "symfony/routing": "^4.2",
         "symfony/yaml": "^4.2",
-        "symfony/dependency-injection": "^4.2"
+        "symfony/dependency-injection": "^4.2",
+        "symfony/finder": "^4.2",
+        "symfony/config": "^4.2"
     },
     "license": "MIT",
     "authors": [

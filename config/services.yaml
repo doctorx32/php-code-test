@@ -1,0 +1,8 @@
+services:
+    get_book_list:
+        class: App\GetBookList
+
+    app:
+        class: App\App
+        arguments:
+            - "@get_book_list"
