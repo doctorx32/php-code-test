@@ -1,0 +1,25 @@
+{
+    "name": "doctorx32/php-code-test",
+    "type": "project",
+    "require": {
+        "php": "^7.1",
+        "ext-json": "^1.6",
+        "ext-curl": "^7.2",
+        "ext-xml": "*",
+        "symfony/routing": "^4.2",
+        "symfony/yaml": "^4.2",
+        "symfony/dependency-injection": "^4.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Chornobyl",
+            "email": "dch@inbox.lv"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
