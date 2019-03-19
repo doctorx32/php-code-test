@@ -1,13 +1,16 @@
 services:
-    get_book_list:
-        class: App\GetBookList
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-    app:
-        class: App\App
-        arguments:
-            - "@get_book_list"
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests}'
 
-    router:
-        class: Symfony\Component\Routing
+    App\App:
+        public: true
+
+    App\Router:
         arguments:
-            -
+            $routes: "%routes%"

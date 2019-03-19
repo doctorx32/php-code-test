@@ -5,6 +5,7 @@ namespace App;
 
 use App\Input\InputInterface;
 use SimpleXMLElement;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -16,31 +17,32 @@ final class GetBookList
     private $format;
 
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @var InputInterface
      */
     private $input;
 
-    public function __construct(RouterInterface $router, InputInterface $input, $format = 'json')
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(InputInterface $input, Router $router, $format = 'json')
     {
         $this->format = $format;
-        $this->router = $router;
         $this->input = $input;
+        $this->router = $router;
     }
 
     public function getBooksByAuthor($authorName, $limit = 10)
     {
         $result = [];
 
-        $output = $this->input->fetch($this->router->generate('api_book_seller', [
+        $url = $this->router->generate('api_book_seller', [
             'authorName' => $authorName,
             'limit' => 10,
             'format' => $this->format
-        ], UrlGeneratorInterface::ABSOLUTE_URL));
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+        $output = $this->input->fetch($url);
 
         if ($this->format == 'json') {
             $json = json_decode($output);

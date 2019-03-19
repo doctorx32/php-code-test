@@ -15,7 +15,9 @@ $routes = $loader->load('routes.yaml');
 $containerBuilder = new ContainerBuilder();
 $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../config'));
 $loader->load('services.yaml');
+$containerBuilder->setParameter('routes', $routes);
+$containerBuilder->compile();
 
 /** @var App $app */
-$app = $containerBuilder->get('app');
+$app = $containerBuilder->get(App::class);
 $app->start();
