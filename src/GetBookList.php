@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace App;
 
 use App\Input\InputInterface;
-use SimpleXMLElement;
-use Symfony\Component\Routing\Generator\UrlGenerator;
+use App\Output\JsonOutput;
+use App\Output\XmlOutput;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 final class GetBookList
 {
@@ -39,36 +38,18 @@ final class GetBookList
 
         $url = $this->router->generate('api_book_seller', [
             'authorName' => $authorName,
-            'limit' => 10,
+            'limit' => $limit,
             'format' => $this->format
         ], UrlGeneratorInterface::ABSOLUTE_URL);
         $output = $this->input->fetch($url);
 
         if ($this->format == 'json') {
-            $json = json_decode($output);
-
-            foreach ($json as $result) {
-                $result[] = [
-                    'title' => $result->book->title,
-                    'author' => $result->book->author,
-                    'isbn' => $result->book->isbn,
-                    'quantity' => $result->stock->level,
-                    'price' => $result->stock->price,
-                ];
-            }
+            $jsonOutput = new JsonOutput();
+            $result = $jsonOutput->parse($output);
         }
         elseif ($this->format == 'xml') {
-            $xml = new SimpleXMLElement($output);
-
-            foreach ($xml as $result) {
-                $result[] = [
-                    'title' => $result->book['name'],
-                    'author' => $result->book['author_name'],
-                    'isbn' => $result->book['isbn_number'],
-                    'quantity' => $result->book->stock['number'],
-                    'price' => $result->book->stock['unit_price'],
-                ];
-            }
+            $xmlOutput = new XmlOutput();
+            $result = $xmlOutput->parse($output);
         }
 
         return $result;
