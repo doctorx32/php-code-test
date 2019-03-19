@@ -5,8 +5,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Loader\YamlFileLoader as RoutingYamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use App\App;
-require_once __DIR__.'/../vendor/autoload.php';
 
+require_once __DIR__.'/../vendor/autoload.php';
 
 $fileLocator = new FileLocator(array(__DIR__ . '/../config'));
 $loader = new RoutingYamlFileLoader($fileLocator);

@@ -6,3 +6,8 @@ services:
         class: App\App
         arguments:
             - "@get_book_list"
+
+    router:
+        class: Symfony\Component\Routing
+        arguments:
+            -

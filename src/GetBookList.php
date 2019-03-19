@@ -1,30 +1,46 @@
 <?php
+declare(strict_types=1);
 
 namespace App;
 
+use App\Input\InputInterface;
 use SimpleXMLElement;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
-class GetBookList
+final class GetBookList
 {
     /**
      * @var string
      */
     private $format;
 
-    public function __construct($format = 'json')
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var InputInterface
+     */
+    private $input;
+
+    public function __construct(RouterInterface $router, InputInterface $input, $format = 'json')
     {
         $this->format = $format;
+        $this->router = $router;
+        $this->input = $input;
     }
 
     public function getBooksByAuthor($authorName, $limit = 10)
     {
         $result = [];
 
-        $curl = curl_init();
-
-        curl_setopt($curl, CURLOPT_URL, "http://api.book-seller-example.com/by-author?q=" . $authorName . '&limit=' . $limit . '&format=' . $this->format);
-        $output = curl_exec($curl);
-        curl_close($curl);
+        $output = $this->input->fetch($this->router->generate('api_book_seller', [
+            'authorName' => $authorName,
+            'limit' => 10,
+            'format' => $this->format
+        ], UrlGeneratorInterface::ABSOLUTE_URL));
 
         if ($this->format == 'json') {
             $json = json_decode($output);
