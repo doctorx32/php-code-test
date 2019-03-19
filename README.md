@@ -4,8 +4,16 @@ You need to refactor this class, it is a simple class that makes a call to a htt
 
 Refactor this to what you consider to be production ready code.
 
-## Getting started
-Simply fork this repository and commit and push your changes to yor fork.
-
 ## Usage 
-run `public/index.php` file.
+0. run `composer install`
+0. run `public/index.php` file.
+
+## Notes
+First of all I added namespaces with Composer.
+
+Component `symfony/routing` added to provide handling other query types - you can easily add new route, 
+pass new parameters and replace in GetBookList class. Also added Dependency Injection component for
+common development way. Next I would add DotEnv implementation, because its modern and extensible way 
+to store project secrets, especially at the deployment, but for this stage of project it is not necessary.
+
+Class `OutputStrategy` implements Programming pattern Strategy for convenient output approaches resolving.

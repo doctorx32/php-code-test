@@ -1,3 +1,7 @@
-api_book_seller:
+api_book_seller_by_author:
     host: api.book-seller-example.com
     path: /by-author/?q={authorName}&limit={limit}&format={format}
+
+api_book_seller_by_year:
+    host: api.book-seller-example.com
+    path: /by-author/?year={year}&limit={limit}&format={format}

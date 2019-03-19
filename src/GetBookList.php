@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Input\InputInterface;
-use App\Output\JsonOutput;
-use App\Output\XmlOutput;
+use App\Output\OutputStrategy;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class GetBookList
@@ -34,24 +33,16 @@ final class GetBookList
 
     public function getBooksByAuthor($authorName, $limit = 10)
     {
-        $result = [];
-
-        $url = $this->router->generate('api_book_seller', [
+        $url = $this->router->generate('api_book_seller_by_author', [
             'authorName' => $authorName,
             'limit' => $limit,
             'format' => $this->format
         ], UrlGeneratorInterface::ABSOLUTE_URL);
+
         $output = $this->input->fetch($url);
 
-        if ($this->format == 'json') {
-            $jsonOutput = new JsonOutput();
-            $result = $jsonOutput->parse($output);
-        }
-        elseif ($this->format == 'xml') {
-            $xmlOutput = new XmlOutput();
-            $result = $xmlOutput->parse($output);
-        }
+        $outputStrategy = new OutputStrategy();
 
-        return $result;
+        return $outputStrategy->resolve($this->format, $output);
     }
 }
